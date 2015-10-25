@@ -1,5 +1,7 @@
-// Solution to:
+// Solucion para:
 // http://www.spoj.com/problems/TAP2014K/
+// Notar que la comparativaSqrt.cpp anda mas rapido (4.3 seg vs 7.1 seg)
+// Indudablemente es por la cache-friendliness.
 
 #include <cstdio>
 #include <cstring>
@@ -31,7 +33,7 @@ struct Datos
     bool invertir; // Se propaga lazy
     int sum;       // Se propaga lazy
     Datos() { cantidad = 1; sum = 0; invertir = false;}
-    void lazyPropagation(Treap::Nodo<Datos>*node)
+    void lazyPropagation(Nodo<Datos>*node)
     {
         if (invertir)
         {
@@ -43,7 +45,7 @@ struct Datos
         caracter = (caracter + sum) % 26;
         sum = 0;
     }
-    void update(Treap::Nodo<Datos>*node)
+    void update(Nodo<Datos>*node)
     {
         cantidad = 1;
         forn(i,2) if (node->_h[i]) cantidad += node->_h[i]->dat.cantidad;
@@ -55,7 +57,7 @@ char cadena[1000000];
 // Buen ejemplo de lo simple que es recorrer el arbol, y las operaciones lazy se hacen solas mientras viajamos si usamos ->h()
 // Igualmente es mas eficiente usar _h[] cuando sabemos que no hay que propagar (nos ahorramos el propagar).
 // Es una constante, pero en SPOJ fue la diferencia entre entrar y no entrar (no parece ser mas que un *3 la diferencia en mediciones locales en mi compu).
-Treap::Nodo<Datos> *iesimo(int i, Treap::Nodo<Datos> *raiz)
+Nodo<Datos> *iesimo(int i, Nodo<Datos> *raiz)
 {
     assert(raiz);
     while (true)
@@ -74,7 +76,7 @@ Treap::Nodo<Datos> *iesimo(int i, Treap::Nodo<Datos> *raiz)
     }
 }
 
-void imprimirCadenaFinal(Treap::Nodo<Datos> *node)
+void imprimirCadenaFinal(Nodo<Datos> *node)
 {
     if (node)
     {
@@ -95,7 +97,7 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
     {
         scanf("%s", cadena);
         int cadenaLength = strlen(cadena);
-        Treap::Treap<Datos> t;
+        Treap<Datos> t;
         forn(i,cadenaLength)
         {
             Datos d;
@@ -110,11 +112,11 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
             int I,J,K,L;
             scanf("%d%d%d%d",&I, &J, &K, &L);
             I--; K--;
-            Treap::Nodo<Datos> *iNode = iesimo(I, t.root);
-            Treap::Nodo<Datos> *jNode = iesimo(J, t.root);
-            Treap::Nodo<Datos> *kNode = iesimo(K, t.root);
-            Treap::Nodo<Datos> *lNode = iesimo(L, t.root);
-            Treap::Treap<Datos> t2,t3,t4, t5; // Los 5 cachos del string inducidos por nuestros cachos disjuntos [I,J) y [K,L)
+            Nodo<Datos> *iNode = iesimo(I, t.root);
+            Nodo<Datos> *jNode = iesimo(J, t.root);
+            Nodo<Datos> *kNode = iesimo(K, t.root);
+            Nodo<Datos> *lNode = iesimo(L, t.root);
+            Treap<Datos> t2,t3,t4, t5; // Los 5 cachos del string inducidos por nuestros cachos disjuntos [I,J) y [K,L)
             t.split(iNode, t2);
             t2.split(jNode, t3);
             t3.split(kNode, t4);
