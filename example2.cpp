@@ -117,10 +117,10 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
             Nodo<Datos> *kNode = iesimo(K, t.root);
             Nodo<Datos> *lNode = iesimo(L, t.root);
             Treap<Datos> t2,t3,t4, t5; // Los 5 cachos del string inducidos por nuestros cachos disjuntos [I,J) y [K,L)
-            t.split(iNode, t2);
-            t2.split(jNode, t3);
-            t3.split(kNode, t4);
-            t4.split(lNode, t5);
+            t.splitPointer(iNode, t2);
+            t2.splitPointer(jNode, t3);
+            t3.splitPointer(kNode, t4);
+            t4.splitPointer(lNode, t5);
             // Cada cacho es invertido y aumentado individualmente
             t2.root->dat.invertir ^= 1;
             t2.root->dat.sum++;
@@ -134,7 +134,7 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
             t.merge(t5);
         }
         // Sacamos el extra que habiamos puesto antes asi no lo imprimimos
-        t.erase(iesimo(cadenaLength, t.root));
+        t.erasePointer(iesimo(cadenaLength, t.root));
         imprimirCadenaFinal(t.root);
         printf("\n");
     }

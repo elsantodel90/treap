@@ -5,7 +5,8 @@
 using namespace std;
 
 // Convencion: esta la funcion foo(const T&), y su amiguita fooPointer(Nodo<T>*), que en general es llamada por la otra (y se puede usar de una perfectamente)
-//             Antes las sobrecargaba ambas como foo, pero en g++ un int se convierte a puntero sin aviso ni warning ni nada, asi que es demasiado peligroso.
+//             Antes las sobrecargaba ambas como foo, pero en c++ un literal int=0 se convierte a puntero null sin aviso ni warning ni nada,
+//              y esa posibilidad oculta me parece demasiado peligrosa (ocurrio sutilmente mientras escribia los tests).
 
 template <typename T>
 struct Nodo
