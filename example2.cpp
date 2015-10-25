@@ -1,7 +1,7 @@
 // Solucion para:
 // http://www.spoj.com/problems/TAP2014K/
 // Notar que la comparativaSqrt.cpp anda mas rapido (4.3 seg vs 7.1 seg)
-// Indudablemente es por la cache-friendliness.
+// Indudablemente es por la cache-friendliness (y que esa ta implementada con arreglos re pistoleramente).
 
 #include <cstdio>
 #include <cstring>
