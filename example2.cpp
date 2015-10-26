@@ -1,7 +1,7 @@
 // Solucion para:
 // http://www.spoj.com/problems/TAP2014K/
-// Notar que la comparativaSqrt.cpp anda mas rapido (4.3 seg vs 7.1 seg)
-// Indudablemente es por la cache-friendliness (y que esa ta implementada con arreglos re pistoleramente).
+// Notar que la comparativaSqrt.cpp anda mas rapido (4.3 seg vs 7 seg)
+// Indudablemente es por la cache-friendliness (y ayuda que comparativaSqrt.cpp ta implementada con arreglos re pistoleramente y esta no ta archimegatuneada).
 
 #include <cstdio>
 #include <cstring>
@@ -97,6 +97,12 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
     {
         scanf("%s", cadena);
         int cadenaLength = strlen(cadena);
+        static Datos v[101000];
+        forn(i, cadenaLength) v[i].caracter = cadena[i] - 'a';
+        Treap<Datos> t(v, cadenaLength+1); // Con el dummy extra
+        /*
+        //
+        //Version original previo a la existencia de treapify en el codigo.
         Treap<Datos> t;
         forn(i,cadenaLength)
         {
@@ -105,6 +111,7 @@ int main() // Notar que este problema es buena onda y no pone strings vacios y e
             t.insertarAUnLado(1, d);
         }
         t.insertarAUnLado(1, Datos()); // Asi tenemos un nodo concreto que juegue de frontera derecha siempre.
+        */
         
         int N; scanf("%d", &N);
         forn(i,N)
