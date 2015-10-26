@@ -132,6 +132,33 @@ struct Treap
     Nodo<T> *root;        
     Treap() : root(NULL) {}
     
+    Nodo<T>* treapify(T v[], int N, int levelP, int STEP)
+    {
+        if (N)
+        {
+            int rootIndex = N/2;
+            Nodo<T>*node = new Nodo<T>(v[rootIndex]);
+            node->p = levelP;
+            node->_h[0] = treapify(v,rootIndex, levelP - STEP, STEP);
+            if (node->_h[0]) node->_h[0]->padre = node;
+            node->_h[1] = treapify(v+rootIndex+1,N-rootIndex-1, levelP - STEP, STEP);
+            if (node->_h[1]) node->_h[1]->padre = node;
+            node->dat.update(node);
+            return node;
+        }
+        else
+            return NULL;
+    }
+    
+    // Arma un treap con los N elementos en el orden dado en O(N), vs N lg N que tomaria irlos insertando.
+    Treap(T v[], int N)
+    {
+        int niveles = 0;
+        int k=1; while(k <= N) k *= 2, niveles++;
+        
+        root = treapify(v, N, RAND_MAX, max(1, RAND_MAX / max(1, niveles-1)));
+    }
+    
     void reroot() { while (root->padre) root = root->padre; }
     
     // Estas 7 funciones que vienen a continuacion muchas veces no se usan.
